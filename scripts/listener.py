@@ -52,9 +52,9 @@ def listener():
     rospy.init_node('motors_listener', anonymous=True)
     rospy.Subscriber('/motors_topic', String, callback)
     rospy.spin()
+    GPIO.cleanup()
 
 if __name__ == '__main__':
-    GPIO.cleanup()
     listener()
 
 
