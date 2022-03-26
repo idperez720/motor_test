@@ -31,22 +31,30 @@ pwm_b.start(0)
 
 #funciones de los motores
 def Adelante():
+    GPIO.output(in2,True)
+    GPIO.output(in1,False)
+    GPIO.output(in3,True)
+    GPIO.output(in4,False)
+
+def Reversa():
     GPIO.output(in2,False)
     GPIO.output(in1,True)
     GPIO.output(in3,False)
     GPIO.output(in4,True)
-def Reversa():
-	GPIO.output(in2,True)
-	GPIO.output(in1,False)
-	GPIO.output(in3,True)
-	GPIO.output(in4,False)
+
 
 def callback(data):
     velocidad = int(data.data)
     rospy.loginfo(str(data.data))
-    Adelante()
+    if velocidad < 0:
+        velocidad = -1*velocidad
+        Reversa() 
+    else:
+        Adelante()
+
     pwm_a.ChangeDutyCycle(velocidad)
-    pwm_b.ChangeDutyCycle(velocidad)    
+    pwm_b.ChangeDutyCycle(velocidad)
+   
 
 def listener():
     rospy.init_node('motors_listener', anonymous=True)
