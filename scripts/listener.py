@@ -42,10 +42,9 @@ def Reversa():
 	GPIO.output(in4,False)
 
 def callback(data):
-    velocidad = data.data
+    velocidad = int(data.data)
     rospy.loginfo(str(data.data))
     Adelante()
-    print(data.data)
     pwm_a.ChangeDutyCycle(velocidad)
     pwm_b.ChangeDutyCycle(velocidad)    
 
